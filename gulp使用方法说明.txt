@@ -1,0 +1,79 @@
+
+   安装node：
+   22.1.安装node:安装node之后，重新打开一个新的cmd,输入 `node -v` 如果能够显示一个版本号,就表明成功
+   2.然后安装 gulp-cli,打开一个 cmd窗口, 输入命令: `npm install -g gulp-cli` 
+   会将gulp-cli 默认下载到c盘!
+   3.安装后可以在cmd中输入 : `gulp -v` 来验证 ，如果出现版本号则表明成功了!
+
+   node的使用步骤：
+      1.下载一个全局的gulp-cli包 `npm install -g gulp-cli`
+        下载之后就会在cmd中多出一个命令: `gulp`, 暂时先不用它(一个电脑只要下载一次就可以了)
+      2.随便新建一个文件夹作为项目文件夹
+      3.在项目文件夹中新建一个文件 `GulpFile.js` 这个文件名不能改
+      4.如果要将less 转换为css,需要下载的包有:
+       `npm install gulp`  
+       `npm install gulp-less`  
+       `npm install less`  
+          1.修改GulpFile.js的代码
+             先得到我们要是使用包中的代码
+             var gulp=require('gulp');
+             var less=require('gulp-less');
+          2.定义一个任务，名为myless
+             gulp.task('myless',function(){
+               匹配到要转换为css的less文件有哪些
+               gulp.src(['*.less'])
+               //把less方法得到的一个对象传递给pipe,它来自动调用，把less转换成css
+               .pipe(less())
+               //存入的路径
+               .pipe(gulp.dest('./css'))
+             })
+          3.再运行，命令：gulp myless
+
+      5.压缩js
+         要下载的包：npm install gulp-uglify
+         gulp.task('myjs',function(){
+	       gulp.src(['./js/*.js'])
+	       .pipe(uglify())
+	       .pipe(gulp.dest('./img'))
+          })
+
+      6.压缩css 
+         要下载的包：npm install gulp-csso
+         gulp.task('mycsso',function(){
+	       gulp.src(['./css/*.css'])
+	       .pipe(csso())
+	       .pipe(gulp.dest('./img'))
+         })
+      7.合并文件
+         要下载的包：npm install gulp-concat
+          gulp.task('myconcat',function(){
+	         //匹配js
+	         gulp.src(['./js/*.js'])
+	         .pipe(uglify())//压缩
+	         .pipe(concat('all.js'))//合并
+	         .pipe(gulp.dest('./concatjs'))
+          })
+
+      8.压缩html
+         要下载的包：npm install gulp-htmlmin
+
+      9.监听文件的变化，自动调用其他任务
+      gulp.task('mywatck',function(){
+         //参数1：要监视的文件
+         //参数2：要执行的任务(压缩的文件)
+         gulp.watch(['./js/*js'],['myconcatjs'])
+         //当less文件变化时，就自动执行myless的任务
+         gulp.watch(['./*.less'].['myless'])
+      })
+
+
+     npm使用步骤：
+       1.打开cmd,切换到项目所在文件夹(我这里假设项目文件夹是npm-demo)
+       2.在cmd中输入命令: `npm init`,会生成一个名为package.json的配置文件,我们暂时用不到，但是需要生成!
+       *name值不要和我们要下载的包名一样*
+
+       3.准备使用npm来下载我们所想要的包, 我这里就假设我们下载 jquery 和 bootstrap  
+       在cmd中输入命令: `npm install jquery` 回车
+       在cmd中输入命令: `npm install bootstrap` 回车
+         dist文件夹中就有我们要使用的jquery.js,像往常一样在html中引入它就可以了
+

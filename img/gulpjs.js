@@ -1,0 +1,1 @@
+function hello(o){console.log("你好"+o),console.log("嘻嘻")}hello("小明明大小二sdfafasdfaf");
